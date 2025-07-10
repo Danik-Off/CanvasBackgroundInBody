@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>IT Мем через background-image</title>
+<style>
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    background-color: black;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    color: #0f0;
+    font-family: monospace;
+  }
+</style>
+</head>
+<body>
+<script>
+  function drawBackground() {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+    const width = window.innerWidth * dpr;
+    const height = window.innerHeight * dpr;
+    canvas.width = width;
+    canvas.height = height;
+    ctx.scale(dpr, dpr);
+
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+
+    ctx.fillStyle = '#0f0';
+    ctx.font = '24px monospace';
+    ctx.textBaseline = 'top';
+
+    const lines = [
+      'Упал - вставай',
+      'Встал - упай',
+      'Упай - чокопай',
+      'Не суди, не гуди',
+      'Не будай вада буди',
+      'Дабуди дабудай',
+    ];
+
+    lines.forEach((line, i) => {
+      ctx.fillText(line, 20, 20 + i * 30);
+    });
+
+    const centerX = 150;
+    const centerY = 230;
+    const radius = 30;
+
+    ctx.strokeStyle = '#0f0';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(centerX - 10, centerY - 10, 5, 0, Math.PI * 2);
+    ctx.arc(centerX + 10, centerY - 10, 5, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(centerX, centerY + 5, 15, 0, Math.PI);
+    ctx.stroke();
+
+    document.body.style.backgroundImage = `url(${canvas.toDataURL()})`;
+  }
+
+  window.addEventListener('resize', drawBackground);
+  drawBackground();
+</script>
+</body>
+</html>
